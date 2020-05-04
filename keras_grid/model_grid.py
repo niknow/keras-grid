@@ -26,18 +26,18 @@ class ModelGrid(ABC):
         self.history = {}
 
     @classmethod
-    def from_param_list(cls, param_list, hyperparameter_dict):
+    def from_parameter_list(cls, parameter_list, hyperparameter_dict):
         """
         Factory to create an instance of the class via a list of parameter arrays instead of a dictionary.
         Resulting grid is built from dictionary combining all parameters in all the lists with each other.
 
-        :param param_list: A list of 1D numpy arrays.
+        :param parameter_list: A list of 1D numpy arrays.
         :param hyperparameter_dict: The dict of hyperparameters passed to the constructor.
         :return: A ModelGrid instance where the parameter_dict is built as the cartesian product of all the
                 parameters in the 1D numpy arrays of the list.
         """
-        shapes = [a.shape[0] for a in param_list]
-        return cls({key: np.array([param[i] for i, param in zip(key, param_list)])
+        shapes = [a.shape[0] for a in parameter_list]
+        return cls({key: np.array([param[i] for i, param in zip(key, parameter_list)])
                     for key, _ in np.ndenumerate(np.zeros(shapes))},
                    hyperparameter_dict)
 

@@ -97,8 +97,8 @@ class TestModelGrid(TestCase):
             self.assertEqual(self.mlpg.models.keys(), self.mlpg_loaded.models.keys())
             self.assertEqual(self.mlpg.history.keys(), self.mlpg_loaded.history.keys())
 
-    def test_from_param_list(self):
-        self.mlp_grid = MlpGrid.from_param_list([np.array([1, 2]), np.array([10, 20, 30])],{'a': 1, 'b': 2})
+    def test_from_parameter_list(self):
+        self.mlp_grid = MlpGrid.from_parameter_list([np.array([1, 2]), np.array([10, 20, 30])], {'a': 1, 'b': 2})
         self.assertEqual([(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2)],
                          sorted(list(self.mlp_grid.parameter_dict.keys())))
         np.testing.assert_array_equal(np.array([[1, 10], [1, 20], [1, 30], [2, 10], [2, 20], [2, 30]]),
