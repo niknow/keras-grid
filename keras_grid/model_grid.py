@@ -102,14 +102,23 @@ class ModelGrid(ABC):
     def fit(self, *args, **kwargs):
         """
         Fits all the models in the grid to the same data. All args and kwargs are passed to keras model `fit´ method.
+        :param args:    Parameters passed as arguments to `fit´ function of each keras model.
+        :param kwargs:  Parameters passed as keyword arguments to `fit´ function of each keras model.
+        :return: Dictionary with same keys as self.parameter_dict and values given by the result of `fit´ on each
+                 associated model using args and kwargs.
         """
         for key in self.parameter_dict:
             print("Fitting with key %s " % type(self).key_to_string(key))
             self.history[key] = self.models[key].fit(*args, **kwargs).history
+        return self.history
 
     def evaluate(self, *args, **kwargs):
         """
         Evaluates all the models in the grid. All args and kwargs are passed to keras model `evaluate´ method.
+        :param args:    Parameters passed as arguments to `evaluate´ function of each keras model.
+        :param kwargs:  Parameters passed as keyword arguments to `evaluate´ function of each keras model.
+        :return: Dictionary with same keys as self.parameter_dict and values given by the result of `evaluate´ on each
+                 associated model using args and kwargs.
         """
         evaluation = {}
         for key in self.parameter_dict:
