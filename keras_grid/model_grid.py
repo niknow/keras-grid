@@ -24,7 +24,6 @@ class ModelGrid(ABC):
         self.hyperparameter_dict = hyperparameter_dict
         self.models = {}
         self.history = {}
-        self.evaluated = {}
 
     @classmethod
     def from_param_list(cls, param_list, hyperparameter_dict):
@@ -112,8 +111,12 @@ class ModelGrid(ABC):
         """
         Evaluates all the models in the grid. All args and kwargs are passed to keras model `evaluate´ method.
         """
+        evaluation = {}
         for key in self.parameter_dict:
-            self.evaluated[key] = self.models[key].evaluate(*args, **kwargs)
+            print(type(self).key_to_string(key))
+            print("Evaluating model with key %s: " % type(self).key_to_string(key))
+            evaluation[key] = self.models[key].evaluate(*args, **kwargs)
+        return evaluation
 
     def save(self, path):
         """
