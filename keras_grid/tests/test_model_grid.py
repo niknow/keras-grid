@@ -70,8 +70,19 @@ class TestModelGrid(TestCase):
         self.mlpg.compile(loss='mean_squared_error',
                           metrics=['mean_squared_error', 'mean_absolute_error'],
                           optimizer='Adam')
-        self.evaluated = self.mlpg.evaluate(x=np.array([1, 2, 3])[np.newaxis, :], y=np.array([4, 5, 6, 7])[np.newaxis, :])
+        self.evaluated = self.mlpg.evaluate(x=np.array([1, 2, 3])[np.newaxis, :],
+                                            y=np.array([4, 5, 6, 7])[np.newaxis, :])
         self.assertEqual(self.evaluated.keys(), self.mlpg.parameter_dict.keys())
+
+    def test_predict(self):
+        self.mlpg.initialize()
+        self.mlpg.compile(loss='mean_squared_error',
+                          metrics=['mean_squared_error', 'mean_absolute_error'],
+                          optimizer='Adam')
+        predictions = self.mlpg.predict(restrict_to_keys=None, x=np.array([1, 2, 3])[np.newaxis, :])
+        self.assertEqual(predictions.keys(), self.mlpg.parameter_dict.keys())
+        predictions = self.mlpg.predict(restrict_to_keys=[(0,1)], x=np.array([1, 2, 3])[np.newaxis, :])
+        self.assertEqual(list(predictions.keys()), [(0, 1)])
 
     def test_key_to_string(self):
         key = (1, 2, 3)

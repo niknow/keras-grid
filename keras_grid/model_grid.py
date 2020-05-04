@@ -118,6 +118,24 @@ class ModelGrid(ABC):
             evaluation[key] = self.models[key].evaluate(*args, **kwargs)
         return evaluation
 
+    def predict(self, restrict_to_keys=None, *args, **kwargs):
+        """
+        Executes model prediction restricted to a subset of the models of the grid.
+
+        :param restrict_to_keys: A list of keys to perform the prediction on. Default value is None, i.e. no restrictions.
+        :param args:    Parameters passed as arguments to `predict´ function of each keras model.
+        :param kwargs:  Parameters passed as keyword arguments to `predict´ function of each keras model.
+        :return: Dictionary with keys given by restrict_to_keys and values given by the predictions of the associated
+                 models using args and kwargs.
+        """
+        if restrict_to_keys is None:
+            restrict_to_keys=self.parameter_dict.keys()
+        predictions = {}
+        for key in restrict_to_keys:
+            print("Predicting for model with key %s: " % type(self).key_to_string(key))
+            predictions[key] = self.models[key].predict(*args, **kwargs)
+        return predictions
+
     def save(self, path):
         """
         Saves the model grid, all the model parameters and hyperparameters, as well as the training history
