@@ -164,5 +164,3 @@ class ModelGrid(ABC):
         # save parameter and hyperparameter dict
         with open(os.path.join(path, type(self).__name__ + ModelGrid._parameter_suffix), 'wb') as fp:
             pickle.dump((self.parameter_dict, self.hyperparameter_dict), fp)
-
-
